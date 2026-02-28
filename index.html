@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Your Digital Privacy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated Waves */
+        .waves {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                rgba(0,255,146,0.1) 0%, 
+                rgba(0,255,146,0.2) 25%, 
+                rgba(0,255,146,0.1) 50%, 
+                rgba(0,255,146,0.2) 75%, 
+                rgba(0,255,146,0.1) 100%);
+            animation: wave 10s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            opacity: 0.5;
+            animation: wave 15s linear infinite;
+            animation-delay: -5s;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Main Content */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh;
+            padding: 0 5%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .content {
+            flex: 1;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .highlight {
+            color: #00ff92;
+            text-shadow: 0 0 20px rgba(0,255,146,0.5);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #00ff92, #00cc73);
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,255,146,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,255,146,0.5);
+        }
+
+        /* Globe Container */
+        .globe-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            animation: floatAnimation 3s ease-in-out infinite;
+        }
+
+        @keyframes floatAnimation {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Globe */
+        .globe {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.5s ease;
+        }
+
+        .globe-mesh {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotateY(0deg) rotateX(10deg); }
+            to { transform: rotateY(360deg) rotateX(10deg); }
+        }
+
+        /* Globe Grid Pattern */
+        .globe-grid {
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(0,255,146,0.3);
+            border-radius: 50%;
+            position: absolute;
+            background: radial-gradient(circle at 30% 30%, 
+                rgba(0,255,146,0.1), 
+                transparent 50%);
+        }
+
+        .globe-grid::before,
+        .globe-grid::after {
+            content: '';
+            position: absolute;
+            border: 1px solid rgba(0,255,146,0.2);
+            border-radius: 50%;
+        }
+
+        .globe-grid::before {
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+        }
+
+        .globe-grid::after {
+            width: 60%;
+            height: 60%;
+            top: 20%;
+            left: 20%;
+        }
+
+        /* Latitude lines */
+        .lat-line {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px solid rgba(0,255,146,0.15);
+            border-radius: 50%;
+        }
+
+        .lat-line:nth-child(1) { transform: rotateX(30deg); }
+        .lat-line:nth-child(2) { transform: rotateX(60deg); }
+        .lat-line:nth-child(3) { transform: rotateX(90deg); }
+        .lat-line:nth-child(4) { transform: rotateX(120deg); }
+        .lat-line:nth-child(5) { transform: rotateX(150deg); }
+
+        /* Particles */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00ff92;
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            box-shadow: 0 0 10px #00ff92;
+        }
+
+        .particle.scatter {
+            animation: scatter 1.5s ease-out forwards;
+        }
+
+        @keyframes scatter {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="waves">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <h1>SECURE YOUR<br><span class="highlight">DIGITAL<br>PRIVACY</span></h1>
+            <p class="subtitle">CONTROL THE PRIVACY AND THE DATA AND </p>
+            <a href="login.html" class="btn-primary">REVOKE NOW</a>
+        </div>
+
+        <div class="globe-container">
+            <div class="globe" id="globe">
+                <div class="globe-mesh">
+                    <div class="globe-grid"></div>
+                    <div class="lat-line"></div>
+                    <div class="lat-line"></div>
+                    <div class="lat-line"></div>
+                    <div class="lat-line"></div>
+                    <div class="lat-line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const globe = document.getElementById('globe');
+        const globeContainer = document.querySelector('.globe-container');
+        let isScattered = false;
+        let particles = [];
+
+        // Create particles
+        function createParticles() {
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = '200px';
+                particle.style.top = '200px';
+                globeContainer.appendChild(particle);
+                particles.push(particle);
+            }
+        }
+
+        createParticles();
+
+        globe.addEventListener('click', function() {
+            if (!isScattered) {
+                // Hide globe
+                globe.style.opacity = '0';
+                
+                // Scatter particles
+                particles.forEach((particle, index) => {
+                    const angle = (Math.PI * 2 * index) / particles.length;
+                    const distance = 150 + Math.random() * 100;
+                    const x = Math.cos(angle) * distance;
+                    const y = Math.sin(angle) * distance;
+                    
+                    particle.style.opacity = '1';
+                    particle.style.transform = `translate(${x}px, ${y}px)`;
+                    particle.style.transition = 'all 0.8s ease-out';
+                });
+                
+                isScattered = true;
+            }
+        });
+
+        globeContainer.addEventListener('mouseleave', function() {
+            if (isScattered) {
+                // Show globe
+                setTimeout(() => {
+                    globe.style.opacity = '1';
+                }, 300);
+                
+                // Gather particles
+                particles.forEach(particle => {
+                    particle.style.transform = 'translate(0, 0)';
+                    particle.style.opacity = '0';
+                    particle.style.transition = 'all 0.8s ease-in';
+                });
+                
+                isScattered = false;
+            }
+        });
+    </script>
+</body>
+</html>

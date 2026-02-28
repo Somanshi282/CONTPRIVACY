@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Privacy Control</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Animated Waves Background */
+        .waves {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                rgba(0,255,146,0.1) 0%, 
+                rgba(0,255,146,0.2) 25%, 
+                rgba(0,255,146,0.1) 50%, 
+                rgba(0,255,146,0.2) 75%, 
+                rgba(0,255,146,0.1) 100%);
+            animation: wave 10s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Header */
+        .header {
+            position: relative;
+            z-index: 100;
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px 50px;
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-dropdown {
+            position: relative;
+        }
+
+        .profile-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00ff92, #00cc73);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 24px;
+        }
+
+        .profile-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0,255,146,0.5);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: rgba(20, 20, 20, 0.95);
+            border-radius: 10px;
+            padding: 10px 0;
+            min-width: 150px;
+            display: none;
+            animation: dropIn 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        @keyframes dropIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #fff;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(0,255,146,0.2);
+            padding-left: 30px;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #00ff92;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(0,255,146,0.5); }
+            to { text-shadow: 0 0 20px rgba(0,255,146,0.8); }
+        }
+
+        /* App Rows */
+        .app-row {
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            animation: slideIn 0.5s ease-out;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,255,146,0.2);
+            position: relative;
+            overflow: visible;
+            z-index: 1;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .app-row:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0,255,146,0.2);
+            border-color: #00ff92;
+        }
+
+        .app-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .app-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .app-icon:hover {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .app-icon.telegram { background: linear-gradient(135deg, #2AABEE, #229ED9); }
+        .app-icon.instagram { background: linear-gradient(135deg, #833AB4, #FD1D1D, #FCAF45); }
+        .app-icon.tiktok { background: linear-gradient(135deg, #000000, #FF0050); }
+        .app-icon.ai { background: linear-gradient(135deg, #00ff92, #00cc73); }
+        .app-icon.grammarly { background: linear-gradient(135deg, #15C39A, #0E8C6C); }
+        .app-icon.access { background: linear-gradient(135deg, #A4373A, #881214); }
+        .app-icon.canva { background: linear-gradient(135deg, #7C2AE8, #00C4CC); }
+
+        .app-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .info-btn {
+            padding: 10px 25px;
+            background: rgba(0,255,146,0.2);
+            border: 2px solid #00ff92;
+            border-radius: 25px;
+            color: #00ff92;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .info-btn:hover {
+            background: #00ff92;
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        /* Button and Dropdown Wrapper */
+        .btn-dropdown-wrapper {
+            position: relative;
+            display: inline-block;
+            z-index: 900;
+            overflow: visible;
+        }
+
+        /* Permission Dropdown */
+        .permission-dropdown {
+            position: absolute;
+            background: rgba(30, 30, 30, 0.98);
+            border-radius: 10px;
+            padding: 15px;
+            display: none;
+            z-index: 9999;
+            min-width: 280px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,255,146,0.1);
+            animation: dropIn 0.3s ease;
+            border: 1px solid rgba(0,255,146,0.3);
+            top: 100%;
+            left: 0;
+            margin-top: 8px;
+            white-space: nowrap;
+        }
+
+        .permission-dropdown.active {
+            display: block;
+        }
+
+        .permission-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: rgba(0,255,146,0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .permission-item:hover {
+            background: rgba(0,255,146,0.2);
+        }
+
+        .permission-item.hidden {
+            display: none;
+        }
+
+        .permission-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .revoke-btn {
+            padding: 5px 15px;
+            background: #ff3b3b;
+            border: none;
+            border-radius: 15px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .revoke-btn:hover {
+            background: #ff0000;
+            transform: scale(1.1);
+        }
+
+        /* Backdrop Overlay */
+        .backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            display: none;
+            z-index: 999;
+        }
+
+        .backdrop.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="waves">
+        <div class="wave"></div>
+    </div>
+
+    <!-- Backdrop Overlay (invisible, only for closing dropdowns) -->
+    <div class="backdrop" id="backdrop"></div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="profile-dropdown">
+            <div class="profile-icon" onclick="toggleProfileMenu()">👤</div>
+            <div class="dropdown-menu" id="profileMenu">
+                <div class="dropdown-item">Profile Info</div>
+                <div class="dropdown-item">Settings</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Privacy Dashboard</h1>
+
+        <!-- Telegram -->
+        <div class="app-row">
+            <div class="app-info">
+                <div class="app-icon telegram">✈️</div>
+                <div class="app-name">Telegram</div>
+            </div>
+            <div class="btn-dropdown-wrapper">
+                <button class="info-btn" onclick="togglePermissions(this)">INFO</button>
+                <div class="permission-dropdown">
+                    <div class="permission-item" id="telegram-mic">
+                        <span class="permission-name">🎤 Microphone Access</span>
+                        <button class="revoke-btn" onclick="revokePermission(this)">Revoke</button>
+                    </div>
+                    <div class="permission-item" id="telegram-cam">
+                        <span class="permission-name">📷 Camera Access</span>
+                        <button class="revoke-btn" onclick="revokePermission(this)">Revoke</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instagram -->
+        <div class="app-row">
+            <div class="app-info">
+                <div class="app-icon instagram">📷</div>
+                <div class="app-name">Instagram</div>
+            </div>
+            <div class="btn-dropdown-wrapper">
+                <button class="info-btn" onclick="togglePermissions(this)">INFO</button>
+                <div class="permission-dropdown">
+                    <div class="permission-item" id="instagram-mic">
+                        <span class="permission-name">🎤 Microphone Access</span>
+                        <button class="revoke-btn" onclick="revokePermission(this)">Revoke</button>
+                    </div>
+                    <div class="permission-item" id="instagram-cam">
+                        <span class="permission-name">📷 Camera Access</span>
+                        <button class="revoke-btn" onclick="revokePermission(this)">Revoke</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TikTok -->
+        <div class="app-row">
+            <div class="app-info">
+                <div class="app-icon tiktok">🎵</div>
+                <div class="app-name">TikTok</div>
+            </div>
+            <div class="btn-dropdown-wrapper">
+                <button class="info-btn" onclick="togglePermissions(this)">INFO</button>
+                <div class="permission-dropdown">
+                    <div class="permission-item" id="tiktok-mic">
+                        <span class="permission-name">🎤 Microphone Access</span>
+                        <button class="revoke-btn" onclick="revokePermission(this)">Revoke</button>
+                    </div>
+                    <div class="permission-item" id="tiktok-cam">
+                        <span class="permission-name">📷 Camera Access</span>
+                        <button class="revoke-btn" onclick="revokePermission(this)">Revoke</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI -->
+        <div class="app-row">
+            <div class="app-info">
+                <div class="app-icon ai">🤖</div>
+                <div class="app-name">AI Assistant</div>
+            </div>
+            <div class="btn-dropdown-wrapper">
+                <button class="info-btn" onclick="togglePermissions(this)">INFO</button>
+                <div class="permission-dropdown">
+                    <div class="permission-item" id="ai-mic">
+                        <span class="permission-name">🎤 Microphone Access</span>
+                        <button class="revoke-btn" onclick="revokePermission(this)">Revoke</button>
+                    </div>
+                    <div class="permission-item" id="ai-cam">
+                        <span class="permission-name">📷 Camera Access</span>
+                        <button class="revoke-btn" onclick="revokePermission(this)">Revoke</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grammarly -->
+        <div class="app-row">
+            <div class="app-info">
+                <div class="app-icon grammarly">✍️</div>
+                <div class="app-name">Grammarly</div>
+            </div>
+            <div class="btn-dropdown-wrapper">
+                <button class="info-btn" onclick="togglePermissions(this)">INFO</button>
+                <div class="permission-dropdown">
+                    <div class="permission-item" id="grammarly-mic">
+                        <span class="permission-name">🎤 Microphone Access</span>
+                        <button class="revoke-btn" onclick="revokePermission(this)">Revoke</button>
+                    </div>
+                    <div class="permission-item" id="grammarly-cam">
+                        <span class="permission-name">📷 Camera Access</span>
+                        <button class="revoke-btn" onclick="revokePermission(this)">Revoke</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Microsoft Access -->
+        <div class="app-row">
+            <div class="app-info">
+                <div class="app-icon access">📊</div>
+                <div class="app-name">Microsoft Access</div>
+            </div>
+            <div class="btn-dropdown-wrapper">
+                <button class="info-btn" onclick="togglePermissions(this)">INFO</button>
+                <div class="permission-dropdown">
+                    <div class="permission-item" id="access-mic">
+                        <span class="permission-name">🎤 Microphone Access</span>
+                        <button class="revoke-btn" onclick="revokePermission(this)">Revoke</button>
+                    </div>
+                    <div class="permission-item" id="access-cam">
+                        <span class="permission-name">📷 Camera Access</span>
+                        <button class="revoke-btn" onclick="revokePermission(this)">Revoke</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Canva -->
+        <div class="app-row">
+            <div class="app-info">
+                <div class="app-icon canva">🎨</div>
+                <div class="app-name">Canva</div>
+            </div>
+            <div class="btn-dropdown-wrapper">
+                <button class="info-btn" onclick="togglePermissions(this)">INFO</button>
+                <div class="permission-dropdown">
+                    <div class="permission-item" id="canva-mic">
+                        <span class="permission-name">🎤 Microphone Access</span>
+                        <button class="revoke-btn" onclick="revokePermission(this)">Revoke</button>
+                    </div>
+                    <div class="permission-item" id="canva-cam">
+                        <span class="permission-name">📷 Camera Access</span>
+                        <button class="revoke-btn" onclick="revokePermission(this)">Revoke</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle profile menu
+        function toggleProfileMenu() {
+            const menu = document.getElementById('profileMenu');
+            menu.classList.toggle('active');
+        }
+
+        // Close profile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const profileDropdown = document.querySelector('.profile-dropdown');
+            if (!profileDropdown.contains(event.target)) {
+                document.getElementById('profileMenu').classList.remove('active');
+            }
+        });
+
+        // Toggle permissions dropdown - scoped to individual button
+        function togglePermissions(button) {
+            const wrapper = button.parentElement;
+            const dropdown = wrapper.querySelector('.permission-dropdown');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close all other dropdowns
+            document.querySelectorAll('.permission-dropdown.active').forEach(drop => {
+                if (drop !== dropdown) {
+                    drop.classList.remove('active');
+                }
+            });
+            
+            // Toggle current dropdown
+            dropdown.classList.toggle('active');
+            
+            // Show/hide backdrop based on any active dropdown
+            const hasActiveDropdown = document.querySelectorAll('.permission-dropdown.active').length > 0;
+            backdrop.classList.toggle('active', hasActiveDropdown);
+
+            // Prevent event from bubbling to backdrop
+            event.stopPropagation();
+        }
+
+        // Close all dropdowns when clicking backdrop
+        document.getElementById('backdrop').addEventListener('click', function(event) {
+            document.querySelectorAll('.permission-dropdown.active').forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+            this.classList.remove('active');
+            event.stopPropagation();
+        });
+
+        // Revoke permission - scoped to specific item only
+        function revokePermission(button) {
+    const permissionItem = button.closest('.permission-item');
+    
+    if (permissionItem) {
+        permissionItem.style.animation = 'fadeOut 0.5s forwards';
+
+        setTimeout(() => {
+            permissionItem.remove();
+        }, 500);
+    }
+}
+
+
+        // Add fadeOut animation
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateX(100px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
