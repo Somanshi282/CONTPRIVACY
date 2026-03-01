@@ -33,8 +33,12 @@ Here’s how the permissions dashboard looks:
 
 ![Dashboard Screenshot](./images/image.png)
 
+<<<<<<< HEAD
 The video of the app is as follows:
 ![CONTPRIVACY DEMO VIDEO ](./images/AMD.mp4)
+=======
+
+>>>>>>> 4b590b5b7906dd8e021de1705902aed721c385e5
 
 Flow of the project is as follows:
 ```mermaid
@@ -52,4 +56,7 @@ graph TD
   K -->|Yes| L[System analyzes behavior]
   L --> M[Alert notification sent to user]
   K -->|No| N[System remains idle]
+<<<<<<< HEAD
 ```​
+=======
+>>>>>>> 4b590b5b7906dd8e021de1705902aed721c385e5
