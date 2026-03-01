@@ -1,0 +1,31 @@
+@startuml
+title CONTPRIVACY User Interaction Flow
+
+start
+
+:User opens the app;
+:Dashboard displays list of applications with permissions;
+
+if (User wants to check permissions?) then (Yes)
+  :System shows history of granted permissions;
+  :System displays charts of usage;
+else (No)
+  :User continues browsing dashboard;
+endif
+
+if (User decides to revoke access?) then (Yes)
+  :System removes selected permission;
+  :Confirmation message shown to user;
+else (No)
+  :No change made;
+endif
+
+if (Suspicious activity detected?) then (Yes)
+  :System analyzes behavior;
+  :Alert notification sent to user;
+else (No)
+  :System remains idle;
+endif
+
+stop
+@enduml
