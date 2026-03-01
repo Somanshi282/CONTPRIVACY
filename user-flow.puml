@@ -1,4 +1,4 @@
-@startuml
+@startuml name 
 title CONTPRIVACY User Interaction Flow
 
 start
