@@ -33,7 +33,11 @@ Here’s how the permissions dashboard looks:
 
 ![Dashboard Screenshot](./images/image.png)
 
+The video of the app is as follows:
+![CONTPRIVACY DEMO VIDEO ](./images/AMD.mp4)
+
 Flow of the project is as follows:
+```mermaid
 graph TD
   A[User opens the app] --> B[Dashboard displays list of applications with permissions]
   B --> C{User wants to check permissions?}
@@ -48,3 +52,4 @@ graph TD
   K -->|Yes| L[System analyzes behavior]
   L --> M[Alert notification sent to user]
   K -->|No| N[System remains idle]
+```​
