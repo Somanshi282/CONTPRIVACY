@@ -34,23 +34,4 @@ Here’s how the permissions dashboard looks:
 ![Dashboard Screenshot](./images/image.png)
 
 
-The video of the app is as follows:
-![CONTPRIVACY DEMO VIDEO](./images/AMD.mp4)
-
-The flow of the project is as follows:
-```mermaid
-graph TD
-  A[User opens the app] --> B[Dashboard displays list of applications with permissions]
-  B --> C{User wants to check permissions?}
-  C -->|Yes| D[System shows history of granted permissions]
-  D --> E[System displays charts of usage]
-  C -->|No| F[User continues browsing dashboard]
-  E --> G{User decides to revoke access?}
-  G -->|Yes| H[System removes selected permission]
-  H --> I[Confirmation message shown to user]
-  G -->|No| J[No change made]
-  I --> K{Suspicious activity detected?}
-  K -->|Yes| L[System analyzes behavior]
-  L --> M[Alert notification sent to user]
-  K -->|No| N[System remains idle]
-```​
+​
