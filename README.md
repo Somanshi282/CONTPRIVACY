@@ -33,6 +33,8 @@ Here’s how the permissions dashboard looks:
 
 ![Dashboard Screenshot](./images/image.png)
 
+
+
 Flow of the project is as follows:
 graph TD
   A[User opens the app] --> B[Dashboard displays list of applications with permissions]
